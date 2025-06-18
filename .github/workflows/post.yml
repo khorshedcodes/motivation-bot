@@ -1,0 +1,30 @@
+# .github/workflows/post.yml
+
+name: Auto Post Motivational Quote
+
+on:
+  schedule:
+    - cron: "0 */2 * * *" # Runs every 2 hours (UTC)
+  workflow_dispatch: # Allows manual run from GitHub UI
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    env:
+      PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
+      PAGE_ID: ${{ secrets.PAGE_ID }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        run: node index.js

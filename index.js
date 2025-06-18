@@ -5,8 +5,13 @@ const FormData = require("form-data");
 
 require("dotenv").config();
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const PAGE_ID = process.env.PAGE_ID;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || "";
+const PAGE_ID = process.env.PAGE_ID || "";
+
+if (!PAGE_ACCESS_TOKEN || !PAGE_ID) {
+  console.error("Missing Facebook credentials.");
+  process.exit(1);
+}
 
 // Get a random quote
 async function getRandomQuote() {
